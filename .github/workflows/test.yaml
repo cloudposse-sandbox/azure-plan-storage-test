@@ -1,5 +1,5 @@
 name: Azure GitHub Actions Demo
-run-name: $Testing out GitHub Actions with Azure 🚀
+run-name: Testing out GitHub Actions with Azure 🚀
 on:
   push:
     branches: [main]
@@ -33,6 +33,7 @@ jobs:
         uses: cloudposse/github-action-terraform-plan-storage@feat/add-azure-support
         with:
           metadataRepositoryType: cosmos
+          planRepositoryType: azureblob
           cosmosContainerName: terraform-plan-storage
           cosmosDatabaseName: terraform-plan-storage
           cosmosEndpoint: "https://plan-storage-demo-cosmosdb-account.documents.azure.com:443/"
