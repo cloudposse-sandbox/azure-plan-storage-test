@@ -35,7 +35,7 @@ jobs:
           metadataRepositoryType: cosmos
           cosmosContainerName: terraform-plan-storage
           cosmosDatabaseName: terraform-plan-storage
-          cosmosEndpoint: https://plan-storage-demo-cosmosdb-account.documents.azure.com:443/
+          cosmosEndpoint: "https://plan-storage-demo-cosmosdb-account.documents.azure.com:443/"
           action: storePlan
           commitSHA: ${{ github.sha }}
           component: fake
