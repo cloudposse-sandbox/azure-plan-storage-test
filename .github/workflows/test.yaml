@@ -15,13 +15,29 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - name: "Az CLI login"
+      - name: Login to Azure with OIDC
         uses: azure/login@v1
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
       - name: "Run az commands"
         run: |
           az account show
-          az group list
+
+      - name: Create fake atmos data
+        run: echo "atmos data" > affected.json
+
+      - name: Store atmos data
+        uses: cloudposse/github-action-terraform-plan-storage@feat/add-azure-support
+        with:
+          metadataRepositoryType: cosmos
+          cosmosContainerName: terraform-plan-storage
+          cosmosDatabaseName: terraform-plan-storage
+          cosmosEndpoint: https://plan-storage-demo-cosmosdb-account.documents.azure.com:443/
+          action: storePlan
+          commitSHA: ${{ github.sha }}
+          component: fake
+          planPath: affected.json
+          stack: mystack
