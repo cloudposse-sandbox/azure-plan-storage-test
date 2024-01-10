@@ -32,6 +32,8 @@ jobs:
       - name: Store atmos data
         uses: cloudposse/github-action-terraform-plan-storage@feat/add-azure-support
         with:
+          blobAccountName: planstoragedemoplans
+          blobContainerName: resources
           metadataRepositoryType: cosmos
           planRepositoryType: azureblob
           cosmosContainerName: terraform-plan-storage
