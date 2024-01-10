@@ -44,3 +44,25 @@ jobs:
           component: fake
           planPath: affected.json
           stack: mystack
+
+      - name: Delete fake atmos data
+        run: rm -f affected.json
+
+      - name: Get atmos data
+        uses: cloudposse/github-action-terraform-plan-storage@feat/add-azure-support
+        with:
+          blobAccountName: planstoragedemoplans
+          blobContainerName: resources
+          metadataRepositoryType: cosmos
+          planRepositoryType: azureblob
+          cosmosContainerName: terraform-plan-storage
+          cosmosDatabaseName: terraform-plan-storage
+          cosmosEndpoint: "https://plan-storage-demo-cosmosdb-account.documents.azure.com:443/"
+          action: getPlan
+          commitSHA: ${{ github.sha }}
+          component: fake
+          planPath: affected.json
+          stack: mystack
+
+      - name: Verify atmos data
+        run: cat affected.json

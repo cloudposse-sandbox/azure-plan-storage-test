@@ -30,6 +30,13 @@ resource "azurerm_storage_container" "planstorage" {
   name                  = "resources"
   storage_account_name  = azurerm_storage_account.planstorage.name
   container_access_type = "private"
+
+}
+
+resource "azurerm_role_assignment" "planstorage_account" {
+  scope                = azurerm_storage_account.planstorage.id
+  role_definition_name = "Storage Blob Data Owner"
+  principal_id         = azuread_service_principal.github_oidc.id
 }
 
 resource "azurerm_role_assignment" "planstorage_container" {
